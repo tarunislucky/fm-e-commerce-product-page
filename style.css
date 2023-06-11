@@ -116,11 +116,11 @@ body {
 	flex: 1 1 0px;
 }
 
-.product-image--current {
+.product-image--container {
 	margin-bottom: 2rem;
 	position: relative;
 }
-.product-image--current img {
+.product-image--container img {
 	width: 100%;
 	border-radius: 1rem;
 	display: block;
@@ -162,6 +162,7 @@ body {
 	background-color: rgba(255, 255, 255, 0.7);
 	z-index: 1;
 	cursor: pointer;
+	pointer-events: none;
 }
 
 .prev-img,
@@ -335,7 +336,7 @@ body {
 	.product-image {
 		padding: 0;
 	}
-	.product-image--current img {
+	.product-image--container img {
 		border-radius: 0;
 	}
 	.prev-img,
