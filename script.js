@@ -1,22 +1,24 @@
-// Elements ///////////////////////////////////////
+// 1. Elements ///////////////////////////////////////
 
-//menu elements
+// 1.1 menu elements
 const openMenuIcon = document.querySelector(".menu-icon");
 const closeMenuIcon = document.querySelector(".close-menu-icon");
 const navigation = document.querySelector(".navigation");
 
-//image carausal elements
+//1.2 image carausal elements
 const prevImg = document.querySelector(".prev-img")
 const nextImg = document.querySelector(".next-img");
 const imageContainer = document.querySelector(".product-image--current");
 const productImgThumbs = document.querySelectorAll(".product-image-thumb")
 const imageThumbs = document.querySelectorAll(".thumb-img");
+const productImages = document.querySelectorAll(".product-image");
 
-// image carousal state
-const array = [1, 2, 3, 4];
+// 2. image carousal state
+let imageCount = productImages.length;
 let pointer = 0;
 
-//functions
+// 3. functions //////////////////////
+// 3.1 menu functions
 const openMenu = () => {
   navigation.classList.add("overlay", "sidemenu");
   document.body.style.overflow = 'hidden';
@@ -26,9 +28,12 @@ const closeMenu = () => {
   navigation.classList.remove("overlay", "sidemenu");
   document.body.style.overflow = 'auto';
 }
+// 3.2 image carousal function
 const updateProductImage = () => {
-  imageContainer.innerHTML = "";
-  imageContainer.innerHTML = `<img src='images/image-product-${array[pointer]}.jpg' alt='product-image'>`;
+  productImages.forEach(img => {
+    img.classList.remove("active");
+  })
+  productImages[pointer].classList.add("active");
 }
 const updateThumbs = (img) => {
   productImgThumbs.forEach(thumb => {
@@ -37,34 +42,36 @@ const updateThumbs = (img) => {
   img.closest(".product-image-thumb").classList.add("current-thumb");
 }
 
-// listeners ////////////////////////////
-
+// 4. listeners ////////////////////////////
+// 4.1 menu listeners
 //open menu
 openMenuIcon.addEventListener("click", openMenu)
 //close menu
 closeMenuIcon.addEventListener("click", closeMenu)
-//close overlat
+//close overlay
 document.addEventListener("click", (e) => {
   e.target.classList.contains("overlay") && closeMenu();
 })
 
-//image slider behavior
+//4.2 image slider listeners
 //on prevBtn click
 prevImg.addEventListener("click", (e) => {
-  //if it's the first element
+  //if it's the first image
   if (pointer === 0) {
-    pointer = array.length;
+    pointer = imageCount - 1;
+  } else {
+    pointer--;
   }
-  pointer--;
   updateProductImage();
 })
 // on next btn click
 nextImg.addEventListener("click", (e) => {
-  //if it's the last element
-  if (pointer === array.length - 1) {
-    pointer = -1;
+  //if it's the last image
+  if (pointer === imageCount - 1) {
+    pointer = 0;
+  } else {
+    pointer++;
   }
-  pointer++;
   updateProductImage();
 });
 // on image thumbnail clicks
